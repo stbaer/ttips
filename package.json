@@ -1,17 +1,14 @@
 {
   "name": "ttips",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
   "license": "MIT",
-  "homepage": "",
-  "repository": {
-    "type": "git",
-    "url": ".git"
-  },
+  "homepage": "https://github.com/stbaer",
+  "repository": "stbaer/ttips",
   "bugs": {
-    "url": "/issues"
+    "url": "https://github.com/stbaer/ttips/issues"
   },
   "keywords": [
     "tooltip",

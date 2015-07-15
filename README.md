@@ -1,6 +1,8 @@
 # ttips
 
-tooltip module
+> Tooltip module.
+
+[![NPM](https://nodei.co/npm/ttips.png?downloads=true)](https://nodei.co/npm/ttips/)
 
 ## Building
 
