@@ -1,0 +1,39 @@
+@ttip-color: rgb(255, 255, 255);
+@ttip-bg-color: rgb(38, 38, 38);
+
+@keyframes pulse {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(0.99);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.ttip {
+    position: fixed; 
+    display: inline-block;
+    text-align: center;
+    top: -1000px;
+    left: -1000px;
+    transform: scale(0);
+    transform-origin: top center;
+    will-change: transform;
+    z-index: 9999;
+    background: @ttip-bg-color;
+    color: @ttip-color;
+    font-size: 10px;
+    line-height: 14px;
+    padding: 5px;
+}
+
+.ttip.ttip-active {
+    animation: pulse 200ms;
+    transform: scale(1);
+}
