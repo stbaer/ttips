@@ -8,7 +8,7 @@ var ACTIVE_CLASS = 'ttip-active';
 function Ttip(el) {
 
     this.element = el;
-    this.targetElement = this.element.parentNode;
+    this.targetElement = this.element.previousElementSibling;
 
     this.onMouseEnterHandler = this.onMouseEnter.bind(this);
     this.onMouseLeaveHandler = this.onMouseLeave.bind(this);
