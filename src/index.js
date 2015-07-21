@@ -1,25 +1,47 @@
 var ACTIVE_CLASS = 'ttip-active';
 
 /**
+ * Ttip
+ *
  * @class
  * @constructor
+ *
  * @param {HTMLElement} el
+ * @param {object} el
  */
-function Ttip(el) {
+function Ttip(el, options) {
 
+    options = options || {};
+    
     this.element = el;
-    this.targetElement = this.element.previousElementSibling;
+    this.showOnClick = options.showOnClick || false;
+
+    this.targetEl = this.element.previousElementSibling;
 
     this.onMouseEnterHandler = this.onMouseEnter.bind(this);
     this.onMouseLeaveHandler = this.onMouseLeave.bind(this);
-    this.targetElement.addEventListener('mouseenter', this.onMouseEnterHandler, false);
-    this.targetElement.addEventListener('click', this.onMouseEnterHandler, false);
-    this.targetElement.addEventListener('mouseleave', this.onMouseLeaveHandler);
+
+    if (this.showOnClick) {
+        this.targetEl.addEventListener('click', this.onMouseEnterHandler);
+    }
+    this.targetEl.addEventListener('mouseenter', this.onMouseEnterHandler);
+    this.targetEl.addEventListener('mouseleave', this.onMouseLeaveHandler);
 }
 
 /**
+ * adds / removes the acive class and event listener for scroll and touchmove
+ * @param {boolean} [doAdd=false]
+ */
+Ttip.prototype.addRemoveClassAndEvents = function(doAdd) {
+    var addOrRemove = doAdd ? 'add' : 'remove';
+
+    this.element.classList[addOrRemove](ACTIVE_CLASS);
+    window[addOrRemove + 'EventListener']('scroll', this.onMouseLeaveHandler);
+    window[addOrRemove + 'EventListener']('touchmove', this.onMouseLeaveHandler);
+};
+
+/**
  * @param {Event} ev
- * @private
  */
 Ttip.prototype.onMouseEnter = function(ev) {
 
@@ -32,32 +54,30 @@ Ttip.prototype.onMouseEnter = function(ev) {
     this.element.style.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
     this.element.style.top = props.top + props.height + 10 + 'px';
 
-    this.element.classList.add(ACTIVE_CLASS);
+    this.addRemoveClassAndEvents(true);
 
-    window.addEventListener('scroll', this.onMouseLeaveHandler, false);
-    window.addEventListener('touchmove', this.onMouseLeaveHandler, false);
 };
 
 /**
- * Handle mouseleave
  * @param {Event} ev
- * @private
  */
 Ttip.prototype.onMouseLeave = function(ev) {
-
     ev.stopPropagation();
-    this.element.classList.remove(ACTIVE_CLASS);
-    window.removeEventListener('scroll', this.onMouseLeaveHandler);
-    window.removeEventListener('touchmove', this.onMouseLeaveHandler, false);
+    this.addRemoveClassAndEvents();
 };
 
 /*
  * Destroy
  */
 Ttip.prototype.destroy = function() {
-    this.targetElement.removeEventListener('mouseenter', this.onMouseEnterHandler, false);
-    this.targetElement.removeEventListener('click', this.onMouseEnterHandler, false);
-    this.targetElement.removeEventListener('mouseleave', this.onMouseLeaveHandler);
+    if (this.element.classList.contains(ACTIVE_CLASS)) {
+        this.onMouseLeaveHandler();
+    }
+    if (this.showOnClick) {
+        this.targetEl.removeEventListener('click', this.onMouseEnterHandler);
+    }
+    this.targetEl.removeEventListener('mouseenter', this.onMouseEnterHandler);
+    this.targetEl.removeEventListener('mouseleave', this.onMouseLeaveHandler);
 };
 
 module.exports = Ttip;
