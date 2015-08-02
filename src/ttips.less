@@ -15,25 +15,22 @@
 
 .ttip {
     display: none;
+	font-size: 11px;
+    line-height: 14px;
+    padding: 5px;
+	background: @ttip-bg-color;
+    color: @ttip-color;
 }
 
 .ttip-host {
 	position: fixed;
     display: inline-block;
-    text-align: center;
-
 	transition: opacity 0.3s ease-in-out;
     animation-name: fadeOut;
 	opacity: 0;
 	top: -9999px;
     left: -9999px;
     z-index: 9999;
-
-	font-size: 11px;
-    line-height: 14px;
-    padding: 5px;
-	background: @ttip-bg-color;
-    color: @ttip-color;
     .ttip{
 		display: inline-block;
 	}

@@ -44,11 +44,15 @@
 }
 .ttip {
   display: none;
+  font-size: 11px;
+  line-height: 14px;
+  padding: 5px;
+  background: #262626;
+  color: #ffffff;
 }
 .ttip-host {
   position: fixed;
   display: inline-block;
-  text-align: center;
   -webkit-transition: opacity 0.3s ease-in-out;
           transition: opacity 0.3s ease-in-out;
   -webkit-animation-name: fadeOut;
@@ -57,11 +61,6 @@
   top: -9999px;
   left: -9999px;
   z-index: 9999;
-  font-size: 11px;
-  line-height: 14px;
-  padding: 5px;
-  background: #262626;
-  color: #ffffff;
 }
 .ttip-host .ttip {
   display: inline-block;
