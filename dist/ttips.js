@@ -1,5 +1,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Ttip = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var ACTIVE_CLASS = 'ttip-active';
+var DISTANCE_TO_ELEMENT = 10;
 
 /**
  * Ttip
@@ -7,8 +8,9 @@ var ACTIVE_CLASS = 'ttip-active';
  * @class
  * @constructor
  *
- * @param {HTMLElement} el
- * @param {object} el
+ * @param {Element} el
+ * @param {object} options
+ * @property {boolean} options.showOnClick
  */
 function Ttip(el, options) {
 
@@ -46,45 +48,42 @@ Ttip.prototype.addRemoveClassAndEvents = function(doAdd) {
  * @param {Element} targetEl
  */
 Ttip.prototype.updatePosition = function(targetEl) {
-    /*
-    case html5tooltipsPredefined.stickTo.bottom:
-           ttElement.style.left = targetRect.left + parseInt((targetRect.width - ttRect.width) / 2) + "px";
-           ttElement.style.top = targetRect.top + targetRect.height + parseInt(ttModel.stickDistance) + "px";
-           break;
-
-      case html5tooltipsPredefined.stickTo.left:
-        ttElement.style.left = targetRect.left - ttRect.width - parseInt(ttModel.stickDistance) + "px";
-        ttElement.style.top = targetRect.top + (targetRect.height - ttRect.height) / 2 + "px";
-        break;
-    */
 
     var targetRect = targetEl.getBoundingClientRect();
     var ttipRect = this.element.getBoundingClientRect();
     var position = this.element.getAttribute('data-ttip-position');
+    var ttipStyle = this.element.style;
+    var left, marginLeft;
 
-    console.log('targetRect', targetRect, 'ttipRect', ttipRect)
+    if (position === 'left') {
 
-    if(position === 'left'){
+        ttipStyle.left = targetRect.left - ttipRect.width - DISTANCE_TO_ELEMENT + 'px';
+        ttipStyle.top = targetRect.top + (targetRect.height - ttipRect.height) / 2 + 'px';
 
-    }else if(position === 'right'){
+    } else if (position === 'right') {
 
-    }else if (position === 'top') {
+        ttipStyle.left = targetRect.right + DISTANCE_TO_ELEMENT + 'px';
+        ttipStyle.top = targetRect.top + (targetRect.height - ttipRect.height) / 2 + 'px';
 
-        var left = targetRect.left + (targetRect.width / 2);
-        var marginLeft = -1 * (this.element.offsetWidth / 2);
+    } else if (position === 'top') {
 
-        this.element.style.left = left + marginLeft < 0 ? 0 : left + 'px';
-        this.element.style.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
-        this.element.style.top = targetRect.top - ttipRect.height + 'px';
+        left = targetRect.left + (targetRect.width / 2);
+        marginLeft = -1 * (this.element.offsetWidth / 2);
 
-    }else{
+        ttipStyle.left = left + marginLeft < 0 ? 0 : left + 'px';
+        ttipStyle.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
+        ttipStyle.top = targetRect.top - ttipRect.height - DISTANCE_TO_ELEMENT + 'px';
 
-        var left = targetRect.left + (targetRect.width / 2);
-        var marginLeft = -1 * (this.element.offsetWidth / 2);
+    } else {
 
-        this.element.style.left = left + marginLeft < 0 ? 0 : left + 'px';
-        this.element.style.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
-        this.element.style.top = targetRect.top + targetRect.height + 10 + 'px';
+        // default - bottom
+
+        left = targetRect.left + (targetRect.width / 2);
+        marginLeft = -1 * (this.element.offsetWidth / 2);
+
+        ttipStyle.left = left + marginLeft < 0 ? 0 : left + 'px';
+        ttipStyle.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
+        ttipStyle.top = targetRect.top + targetRect.height + DISTANCE_TO_ELEMENT + 'px';
     }
 };
 
@@ -95,7 +94,7 @@ Ttip.prototype.onMouseEnter = function(ev) {
     ev.stopPropagation();
 
     this.addRemoveClassAndEvents(true);
-    this.updatePosition( ev.target );
+    this.updatePosition(ev.target);
 };
 
 /**
