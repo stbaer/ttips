@@ -1,4 +1,5 @@
 var ACTIVE_CLASS = 'ttip-active';
+var DISTANCE_TO_ELEMENT = 10;
 
 /**
  * Ttip
@@ -6,13 +7,14 @@ var ACTIVE_CLASS = 'ttip-active';
  * @class
  * @constructor
  *
- * @param {HTMLElement} el
- * @param {object} el
+ * @param {Element} el
+ * @param {object} options
+ * @property {boolean} options.showOnClick
  */
 function Ttip(el, options) {
 
     options = options || {};
-    
+
     this.element = el;
     this.showOnClick = options.showOnClick || false;
 
@@ -29,7 +31,7 @@ function Ttip(el, options) {
 }
 
 /**
- * adds / removes the acive class and event listener for scroll and touchmove
+ * adds / removes the active class and event listener for scroll and touchmove
  * @param {boolean} [doAdd=false]
  */
 Ttip.prototype.addRemoveClassAndEvents = function(doAdd) {
@@ -41,21 +43,57 @@ Ttip.prototype.addRemoveClassAndEvents = function(doAdd) {
 };
 
 /**
+ * update the tooltip position
+ * @param {Element} targetEl
+ */
+Ttip.prototype.updatePosition = function(targetEl) {
+
+    var targetRect = targetEl.getBoundingClientRect();
+    var ttipRect = this.element.getBoundingClientRect();
+    var position = this.element.getAttribute('data-ttip-position');
+    var ttipStyle = this.element.style;
+    var left, marginLeft;
+
+    if (position === 'left') {
+
+        ttipStyle.left = targetRect.left - ttipRect.width - DISTANCE_TO_ELEMENT + 'px';
+        ttipStyle.top = targetRect.top + (targetRect.height - ttipRect.height) / 2 + 'px';
+
+    } else if (position === 'right') {
+
+        ttipStyle.left = targetRect.right + DISTANCE_TO_ELEMENT + 'px';
+        ttipStyle.top = targetRect.top + (targetRect.height - ttipRect.height) / 2 + 'px';
+
+    } else if (position === 'top') {
+
+        left = targetRect.left + (targetRect.width / 2);
+        marginLeft = -1 * (this.element.offsetWidth / 2);
+
+        ttipStyle.left = left + marginLeft < 0 ? 0 : left + 'px';
+        ttipStyle.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
+        ttipStyle.top = targetRect.top - ttipRect.height - DISTANCE_TO_ELEMENT + 'px';
+
+    } else {
+
+        // default - bottom
+
+        left = targetRect.left + (targetRect.width / 2);
+        marginLeft = -1 * (this.element.offsetWidth / 2);
+
+        ttipStyle.left = left + marginLeft < 0 ? 0 : left + 'px';
+        ttipStyle.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
+        ttipStyle.top = targetRect.top + targetRect.height + DISTANCE_TO_ELEMENT + 'px';
+    }
+};
+
+/**
  * @param {Event} ev
  */
 Ttip.prototype.onMouseEnter = function(ev) {
-
     ev.stopPropagation();
-    var props = ev.target.getBoundingClientRect();
-    var left = props.left + (props.width / 2);
-    var marginLeft = -1 * (this.element.offsetWidth / 2);
-
-    this.element.style.left = left + marginLeft < 0 ? 0 : left + 'px';
-    this.element.style.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
-    this.element.style.top = props.top + props.height + 10 + 'px';
 
     this.addRemoveClassAndEvents(true);
-
+    this.updatePosition(ev.target);
 };
 
 /**

@@ -2,63 +2,122 @@
 var ACTIVE_CLASS = 'ttip-active';
 
 /**
+ * Ttip
+ *
  * @class
  * @constructor
+ *
  * @param {HTMLElement} el
+ * @param {object} el
  */
-function Ttip(el) {
+function Ttip(el, options) {
+
+    options = options || {};
 
     this.element = el;
-    this.targetElement = this.element.previousElementSibling;
+    this.showOnClick = options.showOnClick || false;
+
+    this.targetEl = this.element.previousElementSibling;
 
     this.onMouseEnterHandler = this.onMouseEnter.bind(this);
     this.onMouseLeaveHandler = this.onMouseLeave.bind(this);
-    this.targetElement.addEventListener('mouseenter', this.onMouseEnterHandler, false);
-    this.targetElement.addEventListener('click', this.onMouseEnterHandler, false);
-    this.targetElement.addEventListener('mouseleave', this.onMouseLeaveHandler);
+
+    if (this.showOnClick) {
+        this.targetEl.addEventListener('click', this.onMouseEnterHandler);
+    }
+    this.targetEl.addEventListener('mouseenter', this.onMouseEnterHandler);
+    this.targetEl.addEventListener('mouseleave', this.onMouseLeaveHandler);
 }
 
 /**
- * @param {Event} ev
- * @private
+ * adds / removes the active class and event listener for scroll and touchmove
+ * @param {boolean} [doAdd=false]
  */
-Ttip.prototype.onMouseEnter = function(ev) {
+Ttip.prototype.addRemoveClassAndEvents = function(doAdd) {
+    var addOrRemove = doAdd ? 'add' : 'remove';
 
-    ev.stopPropagation();
-    var props = ev.target.getBoundingClientRect();
-    var left = props.left + (props.width / 2);
-    var marginLeft = -1 * (this.element.offsetWidth / 2);
-
-    this.element.style.left = left + marginLeft < 0 ? 0 : left + 'px';
-    this.element.style.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
-    this.element.style.top = props.top + props.height + 10 + 'px';
-
-    this.element.classList.add(ACTIVE_CLASS);
-
-    window.addEventListener('scroll', this.onMouseLeaveHandler, false);
-    window.addEventListener('touchmove', this.onMouseLeaveHandler, false);
+    this.element.classList[addOrRemove](ACTIVE_CLASS);
+    window[addOrRemove + 'EventListener']('scroll', this.onMouseLeaveHandler);
+    window[addOrRemove + 'EventListener']('touchmove', this.onMouseLeaveHandler);
 };
 
 /**
- * Handle mouseleave
+ * update the tooltip position
+ * @param {Element} targetEl
+ */
+Ttip.prototype.updatePosition = function(targetEl) {
+    /*
+    case html5tooltipsPredefined.stickTo.bottom:
+           ttElement.style.left = targetRect.left + parseInt((targetRect.width - ttRect.width) / 2) + "px";
+           ttElement.style.top = targetRect.top + targetRect.height + parseInt(ttModel.stickDistance) + "px";
+           break;
+
+      case html5tooltipsPredefined.stickTo.left:
+        ttElement.style.left = targetRect.left - ttRect.width - parseInt(ttModel.stickDistance) + "px";
+        ttElement.style.top = targetRect.top + (targetRect.height - ttRect.height) / 2 + "px";
+        break;
+    */
+
+    var targetRect = targetEl.getBoundingClientRect();
+    var ttipRect = this.element.getBoundingClientRect();
+    var position = this.element.getAttribute('data-ttip-position');
+
+    console.log('targetRect', targetRect, 'ttipRect', ttipRect)
+
+    if(position === 'left'){
+
+    }else if(position === 'right'){
+
+    }else if (position === 'top') {
+
+        var left = targetRect.left + (targetRect.width / 2);
+        var marginLeft = -1 * (this.element.offsetWidth / 2);
+
+        this.element.style.left = left + marginLeft < 0 ? 0 : left + 'px';
+        this.element.style.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
+        this.element.style.top = targetRect.top - ttipRect.height + 'px';
+
+    }else{
+
+        var left = targetRect.left + (targetRect.width / 2);
+        var marginLeft = -1 * (this.element.offsetWidth / 2);
+
+        this.element.style.left = left + marginLeft < 0 ? 0 : left + 'px';
+        this.element.style.marginLeft = left + marginLeft < 0 ? 0 : marginLeft + 'px';
+        this.element.style.top = targetRect.top + targetRect.height + 10 + 'px';
+    }
+};
+
+/**
  * @param {Event} ev
- * @private
+ */
+Ttip.prototype.onMouseEnter = function(ev) {
+    ev.stopPropagation();
+
+    this.addRemoveClassAndEvents(true);
+    this.updatePosition( ev.target );
+};
+
+/**
+ * @param {Event} ev
  */
 Ttip.prototype.onMouseLeave = function(ev) {
-
     ev.stopPropagation();
-    this.element.classList.remove(ACTIVE_CLASS);
-    window.removeEventListener('scroll', this.onMouseLeaveHandler);
-    window.removeEventListener('touchmove', this.onMouseLeaveHandler, false);
+    this.addRemoveClassAndEvents();
 };
 
 /*
  * Destroy
  */
 Ttip.prototype.destroy = function() {
-    this.targetElement.removeEventListener('mouseenter', this.onMouseEnterHandler, false);
-    this.targetElement.removeEventListener('click', this.onMouseEnterHandler, false);
-    this.targetElement.removeEventListener('mouseleave', this.onMouseLeaveHandler);
+    if (this.element.classList.contains(ACTIVE_CLASS)) {
+        this.onMouseLeaveHandler();
+    }
+    if (this.showOnClick) {
+        this.targetEl.removeEventListener('click', this.onMouseEnterHandler);
+    }
+    this.targetEl.removeEventListener('mouseenter', this.onMouseEnterHandler);
+    this.targetEl.removeEventListener('mouseleave', this.onMouseLeaveHandler);
 };
 
 module.exports = Ttip;

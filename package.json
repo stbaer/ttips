@@ -25,8 +25,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "browser-run": "^1.0.1",
-    "browserify": "^11.0.0",
+    "browser-run": "^2.1.0",
+    "browserify": "^11.0.1",
     "del": "^1.2.0",
     "faucet": "0.0.1",
     "gulp": "^3.9.0",
@@ -48,6 +48,6 @@
     "uglifyjs": "latest",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.3.0"
+    "watchify": "^3.3.1"
   }
 }

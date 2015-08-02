@@ -1,25 +1,63 @@
 <!doctype html>
 
 <head>
-    <meta charset="utf-8">
+    <title>ttips</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1">
-    <meta name="mobile-web-app-capable" content="yes">
-
     <link rel="stylesheet" type="text/css" href="../dist/css/ttips.css">
+    <style>
+        *,
+        *:before,
+        *:after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        html {
+            color: #404040;
+            font-family: Helvetica, arial, sans-serif;
+        }
+
+        body {
+            padding: 50px 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        button {
+            background-color: #fff;
+            padding: 5px 10px;
+        }
+    </style>
 </head>
 
 <body>
+    <h1>ttips</h1>
 
-    <div>
-        Tooltip test
+    <div style="width:100%; text-align: center;">
+        <div style="display: inline-block">
+            Tooltip test
+        </div>
+        <div class="ttip">amazing</div>
     </div>
-    <div class="ttip">amazing</div>
 
     <button>
         Button ttip
     </button>
     <div class="ttip">Button tooltip content</div>
+
+    <div style="width:100%; text-align: center;">
+        <h2>Tooltip positions</h2>
+        <br>
+        <button style="float:left;">left</button>
+        <div class="ttip" data-ttip-position="left">ttip left</div>
+        <button>top</button>
+        <div class="ttip" data-ttip-position="top">ttip top</div>
+        <button>bottom</button>
+        <div class="ttip">ttip bottom (default)</div>
+        <button style="float:right">right</button>
+        <div class="ttip" data-ttip-position="right">ttip right</div>
+    </div>
 
     <script src="{{entry}}"></script>
 
