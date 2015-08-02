@@ -68,6 +68,7 @@ function updatePosition(targetEl) {
     } else {
 
         // default - bottom
+        left = targetRect.left + (targetRect.width / 2);
         marginLeft = -1 * (ttipHostEl.offsetWidth / 2);
 
         ttipStyle.left = left + marginLeft < 0 ? 0 : left + 'px';
