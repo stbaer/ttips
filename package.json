@@ -1,6 +1,6 @@
 {
   "name": "ttips",
-  "version": "0.0.5-1",
+  "version": "0.1.0",
   "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
@@ -12,6 +12,7 @@
   },
   "keywords": [
     "tooltip",
+    "tooltips",
     "browserify"
   ],
   "scripts": {

@@ -43,24 +43,30 @@
   }
 }
 .ttip {
+  display: none;
+}
+.ttip-host {
   position: fixed;
   display: inline-block;
   text-align: center;
-  top: -9999px;
-  left: -9999px;
-  z-index: 9999;
-  background: #262626;
-  color: #ffffff;
-  font-size: 10px;
-  line-height: 14px;
-  padding: 5px;
   -webkit-transition: opacity 0.3s ease-in-out;
           transition: opacity 0.3s ease-in-out;
   -webkit-animation-name: fadeOut;
           animation-name: fadeOut;
   opacity: 0;
+  top: -9999px;
+  left: -9999px;
+  z-index: 9999;
+  font-size: 11px;
+  line-height: 14px;
+  padding: 5px;
+  background: #262626;
+  color: #ffffff;
 }
-.ttip.ttip-active {
+.ttip-host .ttip {
+  display: inline-block;
+}
+.ttip-host.ttip-active {
   -webkit-animation-name: fadeIn;
           animation-name: fadeIn;
   opacity: 1;

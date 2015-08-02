@@ -4,7 +4,7 @@
 
 > Simple and lightweight tooltip module. [Examples](http://stbaer.github.io/ttips)
 
-*minified and gzipped about 1.1 kB js and 0.3 kB css*
+*minified and gzipped about 1.3 kB js and 0.3 kB css*
 
 ## Install
 
@@ -33,14 +33,9 @@ Put a containter with a *.ttip* class behind the element that should trigger the
 JS:
 
 ```js
-var Ttip = require('ttips'); // or use the standalone version from the dist folder
+var ttips = require('ttips'); // or use the standalone version from the dist folder
 
-var ttipElements = document.querySelectorAll('.ttip');
-var ttips = [];
-
-for (var i = 0; i < ttipElements.length; i++) {
-    ttips[i] = new Ttip(ttipElements[i]);
-}
+ttips.initialize();
 ```
 
 ## Building
