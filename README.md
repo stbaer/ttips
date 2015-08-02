@@ -2,15 +2,25 @@
 
 [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
-> Tooltip module.
+> Simple and lightweight tooltip module.
+
+*minified and gzipped about 1.1 kB js and 0.3 kB css*
+
+## Install
+
+`npm i ttips`
 
 [![NPM](https://nodei.co/npm/ttips.png?downloads=true)](https://nodei.co/npm/ttips/)
 
 ## Usage
 
+CSS:
+
+Include *dist/css/ttips.min.css*, extend/change as needed.
+
 HTML:
 
-Put a containter with a .ttip class behind the element that should trigger the tooltip *(previousElementSibling selects the tooltip target)*.
+Put a containter with a *.ttip* class behind the element that should trigger the tooltip *(previousElementSibling selects the tooltip target)*.
 ```html
 <div>Tooltip target</div>
 <div class="ttip">Tooltip content</div>
@@ -32,10 +42,6 @@ for (var i = 0; i < ttipElements.length; i++) {
     ttips[i] = new Ttip(ttipElements[i]);
 }
 ```
-
-CSS:
-
-Include *dist/css/ttips.min.css*, extend/change as needed.
 
 ## Building
 
