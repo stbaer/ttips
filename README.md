@@ -2,7 +2,7 @@
 
 [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
-> Simple and lightweight tooltip module.
+> Simple and lightweight tooltip module. [Examples](http://stbaer.github.io/ttips)
 
 *minified and gzipped about 1.1 kB js and 0.3 kB css*
 
