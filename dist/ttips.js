@@ -123,7 +123,7 @@ function onMouseLeave(ev) {
  */
 function init(ttipEl) {
     var targetEl;
-    if (!ttipEl._ttip) {
+    if (!ttipEl._ttip && !ttipEl.parentNode.classList.contains('ttip-host')) {
         ttipEl._ttip = true;
         targetEl = ttipEl.previousElementSibling;
 
