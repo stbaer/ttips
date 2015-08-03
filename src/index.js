@@ -103,6 +103,15 @@ function onMouseEnter(ev) {
     window.addEventListener('touchmove', onMouseLeave);
 }
 
+function hide(){
+    var hostEl = getHostEl();
+    if(hostEl.classList.contains(ACTIVE_CLASS)){
+        hostEl.classList.remove(ACTIVE_CLASS);
+        window.removeEventListener('scroll', onMouseLeave);
+        window.removeEventListener('touchmove', onMouseLeave);
+    }
+}
+
 /**
  * @param {Event} [ev]
  */
@@ -110,10 +119,7 @@ function onMouseLeave(ev) {
     if (ev) {
         ev.stopPropagation();
     }
-    getHostEl().classList.remove(ACTIVE_CLASS);
-
-    window.removeEventListener('scroll', onMouseLeave);
-    window.removeEventListener('touchmove', onMouseLeave);
+    hide();
 }
 
 /**
@@ -212,5 +218,6 @@ function destroy() {
 module.exports = {
     initialize: initialize,
     update: update,
+    hide: hide,
     destroy: destroy
 };

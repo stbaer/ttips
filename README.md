@@ -41,6 +41,9 @@ ttips.initialize();
 // update the tooltips, e.g after a dom change
 ttips.update();
 
+// hide tooltip, does nothing if no tooltip is visible
+ttips.hide();
+
 // destroy ...
 ttips.destroy();
 
