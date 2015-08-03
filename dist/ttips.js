@@ -307,7 +307,10 @@ function createHost(hostParentEl) {
  * @param  {Event} ev
  */
 function onTtipElementInserted(ev) {
-    init(ev.details.insertedElement);
+    var el = ev.detail.insertedElement;
+    if(el && !el.parentNode.classList.contains(HOST_SELECTOR_CLASS)){
+        init(ev.detail.insertedElement);
+    }
 }
 
 /** module API */
