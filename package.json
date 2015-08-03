@@ -1,6 +1,6 @@
 {
   "name": "ttips",
-  "version": "0.2.1",
+  "version": "0.2.2-0",
   "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
@@ -25,7 +25,7 @@
     "test-visual": "beefy test/visual/ttips.js --index=test/visual/beefy.html"
   },
   "dependencies": {
-    "dom-inserted": "0.0.2"
+    "dom-inserted": "0.0.3-0"
   },
   "devDependencies": {
     "browser-run": "^2.1.0",
