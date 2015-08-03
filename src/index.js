@@ -183,28 +183,35 @@ function createHost(hostParentEl) {
     hostParentEl.appendChild(hostEl);
 }
 
+function update(){
+    var elements = getTtipElements();
+    for (var i = elements.length - 1; i >= 0; i--) {
+        init(elements[i]);
+    }
+}
+
+function initialize(hostParentEl) {
+
+    createHost(hostParentEl);
+    update();
+}
+
+function destroy() {
+    var elements = getTtipElements();
+    var hostEl = getHostEl();
+
+    // destroy the tooltips
+    for (var i = elements.length - 1; i >= 0; i--) {
+        destroy(elements[i]);
+    }
+    // remove the host
+    hostEl.parentNode.removeChild(hostEl);
+    hostEl = null;
+}
+
 /** module API */
 module.exports = {
-
-    initialize: function(hostParentEl) {
-
-        var elements = getTtipElements();
-        createHost(hostParentEl);
-
-        for (var i = elements.length - 1; i >= 0; i--) {
-            init(elements[i]);
-        }
-    },
-    destroy: function() {
-        var elements = getTtipElements();
-        var hostEl = getHostEl();
-
-        // destroy the tooltips
-        for (var i = elements.length - 1; i >= 0; i--) {
-            destroy(elements[i]);
-        }
-        // remove the host
-        hostEl.parentNode.removeChild(hostEl);
-        hostEl = null;
-    }
+    initialize: initialize,
+    update: update,
+    destroy: destroy
 };
