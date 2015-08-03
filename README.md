@@ -4,7 +4,7 @@
 
 > Simple and lightweight tooltip module. [Examples](http://stbaer.github.io/ttips)
 
-*minified and gzipped about 1.4 kB js and 0.3 kB css*
+*minified and gzipped about 1.8 kB js and 0.3 kB css*
 
 ## Install
 

@@ -1,4 +1,4 @@
-'use strict';
+var domInserted = require('dom-inserted');
 
 /**
  * @module ttips
@@ -8,8 +8,6 @@ var SELECTOR_CLASS = 'ttip';
 var HOST_SELECTOR_CLASS = 'ttip-host';
 var ACTIVE_CLASS = 'ttip-active';
 var DISTANCE_TO_ELEMENT = 10;
-
-
 
 /**
  * @param  {Element} ttipEl
@@ -77,11 +75,11 @@ function updatePosition(targetEl) {
     }
 }
 
-function getTtipElFromEvent(ev){
+function getTtipElFromEvent(ev) {
     var ttipEl;
-    if(ev.target.nextElementSibling && ev.target.nextElementSibling.classList.contains('ttip')){
+    if (ev.target.nextElementSibling && ev.target.nextElementSibling.classList.contains('ttip')) {
         ttipEl = ev.target.nextElementSibling;
-    }else if(ev.currentTarget.nextElementSibling && ev.currentTarget.nextElementSibling.classList.contains('ttip')){
+    } else if (ev.currentTarget.nextElementSibling && ev.currentTarget.nextElementSibling.classList.contains('ttip')) {
         ttipEl = ev.currentTarget.nextElementSibling;
     }
     return ttipEl;
@@ -95,7 +93,7 @@ function onMouseEnter(ev) {
 
     var ttipEl = getTtipElFromEvent(ev);
 
-    if(!ttipEl){
+    if (!ttipEl) {
         return;
     }
 
@@ -116,8 +114,8 @@ function onMouseLeave(ev) {
     }
     getHostEl().classList.remove(ACTIVE_CLASS);
 
-    window.addEventListener('scroll', onMouseLeave);
-    window.addEventListener('touchmove', onMouseLeave);
+    window.removeEventListener('scroll', onMouseLeave);
+    window.removeEventListener('touchmove', onMouseLeave);
 }
 
 /**
@@ -187,16 +185,29 @@ function createHost(hostParentEl) {
     hostParentEl.appendChild(hostEl);
 }
 
+/**
+ * .ttip element inserted handler
+ *
+ * @param  {Event} ev
+ */
+function onTtipElementInserted(ev) {
+    init(ev.details.insertedElement);
+}
 
 /** module API */
 module.exports = {
 
     initialize: function(hostParentEl) {
+
         var elements = getTtipElements();
         createHost(hostParentEl);
+
         for (var i = elements.length - 1; i >= 0; i--) {
             init(elements[i]);
         }
+        //listen for new ttip elements being inserted and initialize them
+        domInserted.listen(SELECTOR_CLASS);
+        document.addEventListener('inserted', onTtipElementInserted, false);
     },
     destroy: function() {
         var elements = getTtipElements();
