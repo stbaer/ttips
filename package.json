@@ -24,9 +24,7 @@
     "build": "gulp clean && gulp jshint && gulp styles && npm run bundle-standalone && npm run uglify && npm run show-gzipped-minjs-size",
     "test-visual": "beefy test/visual/ttips.js --index=test/visual/beefy.html"
   },
-  "dependencies": {
-    "dom-inserted": "0.0.3-0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "browser-run": "^2.1.0",
     "browserify": "^11.0.1",
