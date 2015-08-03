@@ -77,14 +77,30 @@ function updatePosition(targetEl) {
     }
 }
 
+function getTtipElFromEvent(ev){
+    var ttipEl;
+    if(ev.target.nextElementSibling.classList.contains('ttip')){
+        ttipEl = ev.target.nextElementSibling;
+    }else if(ev.currentTarget.nextElementSibling.classList.contains('ttip')){
+        ttipEl = ev.currentTarget.nextElementSibling;
+    }
+    return ttipEl;
+}
+
 /**
  * @param {Event} ev
  */
 function onMouseEnter(ev) {
     ev.stopPropagation();
 
-    cloneToHost(ev.target.nextElementSibling);
-    updatePosition(ev.target);
+    var ttipEl = getTtipElFromEvent(ev);
+
+    if(!ttipEl){
+        return;
+    }
+    
+    cloneToHost(ttipEl);
+    updatePosition(ttipEl.previousElementSibling);
     getHostEl().classList.add(ACTIVE_CLASS);
 
     window.addEventListener('scroll', onMouseLeave);
