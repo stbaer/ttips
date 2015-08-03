@@ -46,6 +46,7 @@ ttips.hide();
 
 // destroy ...
 ttips.destroy();
+```
 
 ## Building
 
