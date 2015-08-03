@@ -1,5 +1,3 @@
-var domInserted = require('dom-inserted');
-
 /**
  * @module ttips
  */
@@ -185,18 +183,6 @@ function createHost(hostParentEl) {
     hostParentEl.appendChild(hostEl);
 }
 
-/**
- * .ttip element inserted handler
- *
- * @param  {Event} ev
- */
-function onTtipElementInserted(ev) {
-    var el = ev.detail.insertedElement;
-    if(el && !el.parentNode.classList.contains(HOST_SELECTOR_CLASS)){
-        init(ev.detail.insertedElement);
-    }
-}
-
 /** module API */
 module.exports = {
 
@@ -208,9 +194,6 @@ module.exports = {
         for (var i = elements.length - 1; i >= 0; i--) {
             init(elements[i]);
         }
-        //listen for new ttip elements being inserted and initialize them
-        domInserted.listen(SELECTOR_CLASS);
-        document.addEventListener('inserted', onTtipElementInserted, false);
     },
     destroy: function() {
         var elements = getTtipElements();
