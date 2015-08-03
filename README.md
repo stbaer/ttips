@@ -35,8 +35,14 @@ JS:
 ```js
 var ttips = require('ttips'); // or use the standalone version from the dist folder
 
+// initialize the tooltips
 ttips.initialize();
-```
+
+// update the tooltips, e.g after a dom change
+ttips.update();
+
+// destroy ...
+ttips.destroy();
 
 ## Building
 
@@ -47,6 +53,7 @@ Then you can install dependencies and build:
 ```js
 npm i && npm run build
 ```
+
 
 That will output the built distributables to `./dist`.
 

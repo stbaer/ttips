@@ -1,6 +1,6 @@
 {
   "name": "ttips",
-  "version": "0.2.2-0",
+  "version": "0.2.2",
   "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
