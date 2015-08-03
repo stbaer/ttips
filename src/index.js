@@ -87,7 +87,7 @@ function getTtipElFromEvent(ev) {
  * @param {Event} ev
  */
 function onMouseEnter(ev) {
-    ev.stopPropagation();
+    //ev.stopPropagation();
 
     var ttipEl = getTtipElFromEvent(ev);
 
@@ -116,9 +116,7 @@ function hide(){
  * @param {Event} [ev]
  */
 function onMouseLeave(ev) {
-    if (ev) {
-        ev.stopPropagation();
-    }
+    //if (ev) { ev.stopPropagation(); }
     hide();
 }
 
