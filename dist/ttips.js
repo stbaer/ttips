@@ -80,9 +80,9 @@ function updatePosition(targetEl) {
 
 function getTtipElFromEvent(ev){
     var ttipEl;
-    if(ev.target.nextElementSibling.classList.contains('ttip')){
+    if(ev.target.nextElementSibling && ev.target.nextElementSibling.classList.contains('ttip')){
         ttipEl = ev.target.nextElementSibling;
-    }else if(ev.currentTarget.nextElementSibling.classList.contains('ttip')){
+    }else if(ev.currentTarget.nextElementSibling && ev.currentTarget.nextElementSibling.classList.contains('ttip')){
         ttipEl = ev.currentTarget.nextElementSibling;
     }
     return ttipEl;
@@ -99,7 +99,7 @@ function onMouseEnter(ev) {
     if(!ttipEl){
         return;
     }
-    
+
     cloneToHost(ttipEl);
     updatePosition(ttipEl.previousElementSibling);
     getHostEl().classList.add(ACTIVE_CLASS);
