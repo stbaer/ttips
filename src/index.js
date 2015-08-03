@@ -191,7 +191,6 @@ function update(){
 }
 
 function initialize(hostParentEl) {
-
     createHost(hostParentEl);
     update();
 }

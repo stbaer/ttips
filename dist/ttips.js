@@ -1,121 +1,4 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ttips = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-(function (global){
-
-var NativeCustomEvent = global.CustomEvent;
-
-function useNative () {
-  try {
-    var p = new NativeCustomEvent('cat', { detail: { foo: 'bar' } });
-    return  'cat' === p.type && 'bar' === p.detail.foo;
-  } catch (e) {
-  }
-  return false;
-}
-
-/**
- * Cross-browser `CustomEvent` constructor.
- *
- * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent.CustomEvent
- *
- * @public
- */
-
-module.exports = useNative() ? NativeCustomEvent :
-
-// IE >= 9
-'function' === typeof document.createEvent ? function CustomEvent (type, params) {
-  var e = document.createEvent('CustomEvent');
-  if (params) {
-    e.initCustomEvent(type, params.bubbles, params.cancelable, params.detail);
-  } else {
-    e.initCustomEvent(type, false, false, void 0);
-  }
-  return e;
-} :
-
-// IE <= 8
-function CustomEvent (type, params) {
-  var e = document.createEventObject();
-  e.type = type;
-  if (params) {
-    e.bubbles = Boolean(params.bubbles);
-    e.cancelable = Boolean(params.cancelable);
-    e.detail = params.detail;
-  } else {
-    e.bubbles = false;
-    e.cancelable = false;
-    e.detail = void 0;
-  }
-  return e;
-}
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],2:[function(require,module,exports){
-var CustomEvent = require('custom-event');
-
-// @TODO - use a module for this
-function insertCss(className, animationName) {
-    var css =
-        '@-webkit-keyframes ' + animationName + ' { from { clip: rect(1px, auto, auto, auto); } to { clip: rect(0px, auto, auto, auto); } }' +
-        '@keyframes ' + animationName + ' { from { clip: rect(1px, auto, auto, auto); } to { clip: rect(0px, auto, auto, to); } }' +
-        ' .' + className + ' {' +
-        '   -webkit-animation-duration: 0.001s; animation-duration: 0.001s;' +
-        '   -webkit-animation-name: ' + animationName + '; animation-name: ' + animationName + ';' +
-        '}';
-
-    var el = document.createElement('style');
-    var text = document.createTextNode(css);
-    el.appendChild(text);
-
-    if (document.head.childNodes.length) {
-        document.head.insertBefore(el, document.head.childNodes[0]);
-    } else {
-        document.head.appendChild(el);
-    }
-}
-
-function listen(className) {
-
-    className = className || 'inserted';
-    var animationName = className + 'Inserted';
-
-    insertCss(className, animationName);
-
-    insertListener = function(ev) {
-        var evTarget = ev.target;
-        var newEvent;
-        if (ev.animationName === animationName) {
-
-            newEvent = new CustomEvent('inserted', {
-                bubbles: false,
-                cancelable: true,
-                detail: {
-                    insertedElement: evTarget,
-                    animationName: animationName
-                }
-            });
-
-            if (evTarget.parentNode) {
-                evTarget.parentNode.dispatchEvent(newEvent);
-            }
-            document.dispatchEvent(newEvent);
-        }
-    };
-
-    document.addEventListener("animationstart", insertListener, false);
-    document.addEventListener("MSAnimationStart", insertListener, false);
-    document.addEventListener("webkitAnimationStart", insertListener, false);
-
-}
-
-/** module api */
-module.exports = {
-    listen: listen
-};
-
-},{"custom-event":1}],3:[function(require,module,exports){
-var domInserted = require('dom-inserted');
-
 /**
  * @module ttips
  */
@@ -301,46 +184,37 @@ function createHost(hostParentEl) {
     hostParentEl.appendChild(hostEl);
 }
 
-/**
- * .ttip element inserted handler
- *
- * @param  {Event} ev
- */
-function onTtipElementInserted(ev) {
-    var el = ev.detail.insertedElement;
-    if(el && !el.parentNode.classList.contains(HOST_SELECTOR_CLASS)){
-        init(ev.detail.insertedElement);
+function update(){
+    var elements = getTtipElements();
+    for (var i = elements.length - 1; i >= 0; i--) {
+        init(elements[i]);
     }
+}
+
+function initialize(hostParentEl) {
+    createHost(hostParentEl);
+    update();
+}
+
+function destroy() {
+    var elements = getTtipElements();
+    var hostEl = getHostEl();
+
+    // destroy the tooltips
+    for (var i = elements.length - 1; i >= 0; i--) {
+        destroy(elements[i]);
+    }
+    // remove the host
+    hostEl.parentNode.removeChild(hostEl);
+    hostEl = null;
 }
 
 /** module API */
 module.exports = {
-
-    initialize: function(hostParentEl) {
-
-        var elements = getTtipElements();
-        createHost(hostParentEl);
-
-        for (var i = elements.length - 1; i >= 0; i--) {
-            init(elements[i]);
-        }
-        //listen for new ttip elements being inserted and initialize them
-        domInserted.listen(SELECTOR_CLASS);
-        document.addEventListener('inserted', onTtipElementInserted, false);
-    },
-    destroy: function() {
-        var elements = getTtipElements();
-        var hostEl = getHostEl();
-
-        // destroy the tooltips
-        for (var i = elements.length - 1; i >= 0; i--) {
-            destroy(elements[i]);
-        }
-        // remove the host
-        hostEl.parentNode.removeChild(hostEl);
-        hostEl = null;
-    }
+    initialize: initialize,
+    update: update,
+    destroy: destroy
 };
 
-},{"dom-inserted":2}]},{},[3])(3)
+},{}]},{},[1])(1)
 });
