@@ -16,6 +16,7 @@ function cloneToHost(ttipEl) {
 }
 
 /**
+ *
  */
 function removeHostChilds() {
     var hostEl = getHostEl();
@@ -73,6 +74,10 @@ function updatePosition(targetEl) {
     }
 }
 
+/**
+ * @param  {Event} ev
+ * @return {Element}
+ */
 function getTtipElFromEvent(ev) {
     var ttipEl;
     if (ev.target.nextElementSibling && ev.target.nextElementSibling.classList.contains('ttip')) {
@@ -84,31 +89,42 @@ function getTtipElFromEvent(ev) {
 }
 
 /**
- * @param {Event} ev
+ * @param  {Element} ttipEl
  */
-function onMouseEnter(ev) {
-    //ev.stopPropagation();
+function show(ttipEl) {
 
-    var ttipEl = getTtipElFromEvent(ev);
-
-    if (!ttipEl) {
-        return;
-    }
+    var targetEl = ttipEl.previousElementSibling;
 
     cloneToHost(ttipEl);
-    updatePosition(ttipEl.previousElementSibling);
+    updatePosition(targetEl);
     getHostEl().classList.add(ACTIVE_CLASS);
 
     window.addEventListener('scroll', onMouseLeave);
     window.addEventListener('touchmove', onMouseLeave);
 }
 
+/**
+ * Hide any visible tooltip
+ */
 function hide(){
     var hostEl = getHostEl();
     if(hostEl.classList.contains(ACTIVE_CLASS)){
         hostEl.classList.remove(ACTIVE_CLASS);
         window.removeEventListener('scroll', onMouseLeave);
         window.removeEventListener('touchmove', onMouseLeave);
+        while (hostEl.firstChild) {
+            hostEl.removeChild(hostEl.firstChild);
+        }
+    }
+}
+
+/**
+ * @param {Event} ev
+ */
+function onMouseEnter(ev) {
+    var ttipEl = getTtipElFromEvent(ev);
+    if (ttipEl) {
+        show(ttipEl);
     }
 }
 
@@ -116,12 +132,11 @@ function hide(){
  * @param {Event} [ev]
  */
 function onMouseLeave(ev) {
-    //if (ev) { ev.stopPropagation(); }
     hide();
 }
 
 /**
- * Initialize toggle element.
+ * Initialize the tooltip
  * @param {Element} ttipEl - The toggle element.
  */
 function init(ttipEl) {
@@ -130,10 +145,7 @@ function init(ttipEl) {
         ttipEl._ttip = true;
         targetEl = ttipEl.previousElementSibling;
 
-        targetEl.addEventListener('click', onMouseEnter);
         targetEl.addEventListener('mouseenter', onMouseEnter);
-        targetEl.addEventListener('touchstart', onMouseEnter);
-
         targetEl.addEventListener('mouseleave', onMouseLeave);
         targetEl.addEventListener('blur', onMouseLeave);
     }
@@ -149,12 +161,10 @@ function destroy(ttipEl) {
         if (ttipEl.classList.contains(ACTIVE_CLASS)) {
             getHostEl.classList.remove(ACTIVE_CLASS);
         }
-        targetEl.removeEventListener('click', onMouseEnter);
         targetEl.removeEventListener('mouseenter', onMouseEnter);
-        targetEl.removeEventListener('touchstart', onMouseEnter);
-
         targetEl.removeEventListener('mouseleave', onMouseLeave);
         targetEl.removeEventListener('blur', onMouseLeave);
+
         ttipEl._ttip = null;
     }
 }
@@ -166,13 +176,14 @@ function destroy(ttipEl) {
 function getTtipElements() {
     return document.querySelectorAll('.' + SELECTOR_CLASS);
 }
-
+/**
+ * @return {Element | null}
+ */
 function getHostEl() {
     return document.querySelector('.' + HOST_SELECTOR_CLASS);
 }
 
 /**
- * [createHost description]
  * @param  {Element} hostParentEl
  */
 function createHost(hostParentEl) {
@@ -187,6 +198,9 @@ function createHost(hostParentEl) {
     hostParentEl.appendChild(hostEl);
 }
 
+/**
+ *
+ */
 function update(){
     var elements = getTtipElements();
     for (var i = elements.length - 1; i >= 0; i--) {
@@ -194,11 +208,18 @@ function update(){
     }
 }
 
+/**
+ * initialize tooltips
+ * @param  {Element} hostParentEl
+ */
 function initialize(hostParentEl) {
     createHost(hostParentEl);
     update();
 }
 
+/**
+ * destroy all tooltips
+ */
 function destroy() {
     var elements = getTtipElements();
     var hostEl = getHostEl();
@@ -212,7 +233,10 @@ function destroy() {
     hostEl = null;
 }
 
-/** module API */
+/**
+ * module API
+ * @type {Object}
+ */
 module.exports = {
     initialize: initialize,
     update: update,
