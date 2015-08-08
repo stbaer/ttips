@@ -44,7 +44,7 @@
     "jshint-summary": "^0.4.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.2",
-    "tape": "^4.0.1",
+    "tape": "^4.0.3",
     "testling": "^1.7.1",
     "uglifyjs": "latest",
     "vinyl-buffer": "^1.0.0",
