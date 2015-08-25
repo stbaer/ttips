@@ -1,5 +1,9 @@
 var ttips = require('../../');
 
+// for testing
+globals = {};
+globals.ttips = ttips;
+
 /*
 var ttipElements = document.querySelectorAll('.ttip');
 var ttips = [];

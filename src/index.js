@@ -154,7 +154,7 @@ function init(ttipEl) {
 /**
  * @param {Element} ttipEl
  */
-function destroy(ttipEl) {
+function destroySingle(ttipEl) {
     var targetEl;
     if (ttipEl._ttip === true) {
         targetEl = ttipEl.previousElementSibling;
@@ -226,7 +226,7 @@ function destroy() {
 
     // destroy the tooltips
     for (var i = elements.length - 1; i >= 0; i--) {
-        destroy(elements[i]);
+        destroySingle(elements[i]);
     }
     // remove the host
     hostEl.parentNode.removeChild(hostEl);
