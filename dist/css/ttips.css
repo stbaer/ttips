@@ -53,8 +53,7 @@
 .ttip-host {
   position: fixed;
   display: inline-block;
-  -webkit-transition: opacity 0.3s ease-in-out;
-          transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   -webkit-animation-name: fadeOut;
           animation-name: fadeOut;
   opacity: 0;
