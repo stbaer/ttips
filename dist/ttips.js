@@ -1,4 +1,61 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ttips = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict'
+
+function injectStyleTag (document, fileName, cb) {
+  var style = document.getElementById(fileName)
+
+  if (style) {
+    cb(style)
+  } else {
+    var head = document.getElementsByTagName('head')[0]
+
+    style = document.createElement('style')
+    if (fileName != null) style.id = fileName
+    cb(style)
+    head.appendChild(style)
+  }
+
+  return style
+}
+
+module.exports = function (css, customDocument, fileName) {
+  var doc = customDocument || document
+  /* istanbul ignore if: not supported by Electron */
+  if (doc.createStyleSheet) {
+    var sheet = doc.createStyleSheet()
+    sheet.cssText = css
+    return sheet.ownerNode
+  } else {
+    return injectStyleTag(doc, fileName, function (style) {
+      /* istanbul ignore if: not supported by Electron */
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css
+      } else {
+        style.innerHTML = css
+      }
+    })
+  }
+}
+
+module.exports.byUrl = function (url) {
+  /* istanbul ignore if: not supported by Electron */
+  if (document.createStyleSheet) {
+    return document.createStyleSheet(url).ownerNode
+  } else {
+    var head = document.getElementsByTagName('head')[0]
+    var link = document.createElement('link')
+
+    link.rel = 'stylesheet'
+    link.href = url
+
+    head.appendChild(link)
+    return link
+  }
+}
+
+},{}],2:[function(require,module,exports){
+require('./ttips.css');
+
 /**
  * @module ttips
  */
@@ -245,5 +302,11 @@ module.exports = {
     destroy: destroy
 };
 
-},{}]},{},[1])(1)
+},{"./ttips.css":3}],3:[function(require,module,exports){
+var inject = require('./../node_modules/cssify');
+var css = "@-webkit-keyframes fadeIn {\n\t0% { opacity: 0 }\n    50% { opacity: 0.99 }\n\t100% { opacity: 1 }\n}\n\n@keyframes fadeIn {\n\t0% { opacity: 0 }\n    50% { opacity: 0.99 }\n\t100% { opacity: 1 }\n}\n\n@-webkit-keyframes fadeOut {\n\t0% { opacity: 1 }\n    50% { opacity: 0.99 }\n\t100% { opacity: 0 }\n}\n\n@keyframes fadeOut {\n\t0% { opacity: 1 }\n    50% { opacity: 0.99 }\n\t100% { opacity: 0 }\n}\n\n.ttip {\n    display: none;\n\tfont-size: 11px;\n    line-height: 14px;\n    padding: 5px;\n\tbackground: rgb(38, 38, 38);\n    color: rgb(255, 255, 255);\n}\n\n.ttip-host {\n\tposition: fixed;\n    display: inline-block;\n\t-webkit-transition: opacity 0.3s ease-in-out;\n\ttransition: opacity 0.3s ease-in-out;\n    -webkit-animation-name: fadeOut;\n            animation-name: fadeOut;\n\topacity: 0;\n\ttop: -9999px;\n    left: -9999px;\n    z-index: 9999;\n}\n.ttip-host .ttip{\n\tdisplay: inline-block;\n}\n\n.ttip-host.ttip-active {\n    -webkit-animation-name: fadeIn;\n            animation-name: fadeIn;\n\topacity: 1;\n    visibility: visible;\n}\n";
+inject(css, undefined, '_1azmkon');
+module.exports = css;
+
+},{"./../node_modules/cssify":1}]},{},[2])(2)
 });

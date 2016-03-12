@@ -1,10 +1,19 @@
-@ttip-color: rgb(255, 255, 255);
-@ttip-bg-color: rgb(38, 38, 38);
+@-webkit-keyframes fadeIn {
+	0% { opacity: 0 }
+    50% { opacity: 0.99 }
+	100% { opacity: 1 }
+}
 
 @keyframes fadeIn {
 	0% { opacity: 0 }
     50% { opacity: 0.99 }
 	100% { opacity: 1 }
+}
+
+@-webkit-keyframes fadeOut {
+	0% { opacity: 1 }
+    50% { opacity: 0.99 }
+	100% { opacity: 0 }
 }
 
 @keyframes fadeOut {
@@ -18,26 +27,29 @@
 	font-size: 11px;
     line-height: 14px;
     padding: 5px;
-	background: @ttip-bg-color;
-    color: @ttip-color;
+	background: rgb(38, 38, 38);
+    color: rgb(255, 255, 255);
 }
 
 .ttip-host {
 	position: fixed;
     display: inline-block;
+	-webkit-transition: opacity 0.3s ease-in-out;
 	transition: opacity 0.3s ease-in-out;
-    animation-name: fadeOut;
+    -webkit-animation-name: fadeOut;
+            animation-name: fadeOut;
 	opacity: 0;
 	top: -9999px;
     left: -9999px;
     z-index: 9999;
-    .ttip{
-		display: inline-block;
-	}
+}
+.ttip-host .ttip{
+	display: inline-block;
 }
 
 .ttip-host.ttip-active {
-    animation-name: fadeIn;
+    -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
 	opacity: 1;
     visibility: visible;
 }

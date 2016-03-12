@@ -1,3 +1,5 @@
+require('./ttips.css');
+
 /**
  * @module ttips
  */

@@ -16,39 +16,25 @@
     "browserify"
   ],
   "scripts": {
-    "test": "browserify test/unit/*.js | browser-run | faucet",
-    "clean": "rm -rf ./dist",
+    "test": "browserify -t cssify test/unit/*.js | browser-run | faucet",
+    "clean": "rm -rf ./dist/**",
     "show-gzipped-minjs-size": "echo \"js minified and gzipped: \" && gzip -c dist/ttips.min.js | wc -c",
-    "bundle-standalone": "browserify src/index.js --standalone=\"ttips\" > dist/ttips.js",
+    "bundle-standalone": "browserify -t cssify src/index.js --standalone=\"ttips\" > dist/ttips.js ",
     "uglify:dist": "uglifyjs dist/ttips.js --screw-ie8 -cm > dist/ttips.min.js",
     "uglify": "npm run uglify:dist",
-    "build": "npm run clean && gulp jshint && gulp styles && npm run bundle-standalone && npm run uglify && npm run show-gzipped-minjs-size",
-    "test-visual": "beefy test/visual/ttips.js --index=test/visual/beefy.html"
+    "build": "npm run clean && jshint src/*.js && npm run bundle-standalone && npm run uglify && npm run show-gzipped-minjs-size",
+    "test-visual": "beefy test/visual/ttips.js --index=test/visual/beefy.html -- -t cssify"
   },
   "dependencies": {},
   "devDependencies": {
     "browser-run": "^3.0.8",
     "browserify": "^13.0.0",
+    "cssify": "^1.0.2",
     "faucet": "0.0.1",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-cached": "^1.1.0",
-    "gulp-csso": "^1.1.0",
-    "gulp-jshint": "^2.0.0",
-    "gulp-less": "^3.0.5",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-size": "^2.1.0",
-    "gulp-uglify": "^1.5.3",
-    "gulp-util": "^3.0.7",
-    "jshint-summary": "^0.4.0",
-    "require-dir": "^0.3.0",
-    "run-sequence": "^1.1.5",
+    "jshint": "^2.9.1",
     "tape": "^4.5.1",
     "testling": "^1.7.1",
     "uglify-js": "latest",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   }
 }

@@ -4,25 +4,20 @@
     <title>ttips</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <style>
-        *,
-        *:before,
-        *:after {
+        *, *:before, *:after {
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
         }
-
         html {
             color: #404040;
             font-family: Helvetica, arial, sans-serif;
         }
-
         body {
             padding: 50px 20px;
             margin: 0 auto;
             max-width: 800px;
         }
-
         button {
             background-color: #fff;
             padding: 5px 10px;
@@ -58,6 +53,7 @@
         <div class="ttip" data-ttip-position="right">ttip right</div>
     </div>
 
-    <script src="{{entry}}"></script>
+    <script src="../../dist/ttips.js"></script>
+    <script>ttips.initialize();</script>
 
 </body>
