@@ -17,13 +17,12 @@
   ],
   "scripts": {
     "test": "browserify -t cssify test/unit/*.js | browser-run | faucet",
-    "clean": "rm -rf ./dist/**",
-    "show-gzipped-minjs-size": "echo \"js minified and gzipped: \" && gzip -c dist/ttips.min.js | wc -c",
-    "bundle-standalone": "browserify -t cssify src/index.js --standalone=\"ttips\" > dist/ttips.js ",
-    "bundle": "browserify -t cssify src/index.js -o bundle.js ",
-    "uglify:dist": "uglifyjs dist/ttips.js --screw-ie8 -cm > dist/ttips.min.js",
-    "uglify": "npm run uglify:dist",
-    "build": "npm run clean && jshint src/*.js && npm run bundle && npm run bundle-standalone && npm run uglify && npm run show-gzipped-minjs-size",
+    "clean": "rm -rf ./standalone",
+    "show-gzipped-minjs-size": "echo \"js minified and gzipped: \" && gzip -c standalone/ttips.min.js | wc -c",
+    "bundle-standalone": "mkdirp standalone && browserify -t cssify src/index.js --standalone=\"ttips\" > standalone/ttips.js ",
+    "uglify:standalone": "uglifyjs standalone/ttips.js --screw-ie8 -cm > standalone/ttips.min.js",
+    "uglify": "npm run uglify:standalone",
+    "build": "npm run clean && jshint src/*.js && npm run bundle-standalone && npm run uglify && npm run show-gzipped-minjs-size",
     "test-visual": "beefy test/visual/ttips.js --index=test/visual/beefy.html -- -t cssify"
   },
   "browserify": {
