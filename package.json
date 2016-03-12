@@ -1,7 +1,7 @@
 {
   "name": "ttips",
   "version": "0.3.0",
-  "main": "./bundle.js",
+  "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
   "license": "MIT",
