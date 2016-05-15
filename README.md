@@ -8,8 +8,6 @@
 
 `npm i ttips`
 
-[![NPM](https://nodei.co/npm/ttips.png?downloads=true)](https://nodei.co/npm/ttips/)
-
 ## Usage
 
 HTML:
@@ -26,20 +24,13 @@ Put a containter with a *.ttip* class behind the element that should trigger the
 
 JS:
 
-```js
-var ttips = require('ttips'); // or use the standalone version from the dist folder
+```
+var ttips = require('ttips'); // or use standalone/ttips(.min).js
 
-// initialize the tooltips
-ttips.initialize();
-
-// update the tooltips, e.g after a dom change
-ttips.update();
-
-// hide tooltip, does nothing if no tooltip is visible
-ttips.hide();
-
-// destroy ...
-ttips.destroy();
+ttips.initialize();    // initialize the tooltips
+ttips.update();        // update the tooltips, e.g after a dom change
+ttips.hide();          // hide tooltip, does nothing if no tooltip is visible
+ttips.destroy();       // destroy ...
 ```
 
 ## Building
@@ -47,8 +38,6 @@ ttips.destroy();
 ```
 npm i && npm run build
 ```
-
-[node]: http://nodejs.org/
 
 
 ## Licence
