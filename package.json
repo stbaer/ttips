@@ -28,6 +28,10 @@
     "serve:docs": "docute ./docs",
     "release": "gf-release"
   },
+  "files": [
+    "dist/",
+    "src/"
+  ],
   "dependencies": {
     "ev-pos": "^1.0.1",
     "http-server": "0.11.1"
