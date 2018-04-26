@@ -1,6 +1,6 @@
 {
   "name": "ttips",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
@@ -19,7 +19,7 @@
     "lint": "eslint -c ./.eslintrc.js --ext .js src config",
     "lintfix": "npm run lint -- --fix",
     "dev": "NODE_ENV=development webpack-dev-server --config webpack.config.js --env=development --progress --profile --colors --inline",
-    "prebuild": "npm run lint && rm -rf ./dist",
+    "prebuild": "npm run lint && npm run test && rm -rf ./dist",
     "build": "NODE_ENV=production webpack --config webpack.config.js --env=production --progress --profile --colors",
     "analyze": "npm run build --report",
     "postbuild": "csso src/ttips.css > dist/ttips.min.css",
@@ -32,10 +32,7 @@
     "dist/",
     "src/"
   ],
-  "dependencies": {
-    "ev-pos": "^1.0.1",
-    "http-server": "0.11.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "8.2.0",
     "ava": "0.25.0",
@@ -59,9 +56,6 @@
     "gf-release": "1.4.5",
     "html-webpack-plugin": "3.2.0",
     "mkdirp": "^0.5.1",
-    "nodes-each": "1.0.3",
-    "pre-commit": "1.2.2",
-    "pre-push": "0.1.1",
     "progress-bar-webpack-plugin": "1.11.0",
     "style-loader": "0.20.3",
     "url-loader": "1.0.1",
@@ -79,12 +73,6 @@
       "babel-register"
     ]
   },
-  "pre-commit": [
-    "lint"
-  ],
-  "pre-push": [
-    "test"
-  ],
   "releaseConfig": {
     "buildCommand": "npm run build && git add -A && git commit -am \"updated build (--)\"; ",
     "versionFiles": [
