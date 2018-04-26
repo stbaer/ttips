@@ -1,6 +1,6 @@
 {
   "name": "ttips",
-  "version": "0.3.3",
+  "version": "1.0.0",
   "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
@@ -12,33 +12,93 @@
   },
   "keywords": [
     "tooltip",
-    "tooltips",
-    "browserify"
+    "tooltips"
   ],
   "scripts": {
-    "test": "browserify test/unit/*.js | browser-run | faucet",
-    "clean": "rm -rf ./standalone",
-    "show-gzipped-minjs-size": "echo \"js minified and gzipped: \" && gzip -c standalone/ttips.min.js | wc -c",
-    "bundle-standalone": "mkdirp standalone && browserify src/index.js --standalone=\"ttips\" > standalone/ttips.js ",
-    "uglify:standalone": "uglifyjs standalone/ttips.js --screw-ie8 -cm > standalone/ttips.min.js",
-    "uglify": "npm run uglify:standalone",
-    "build": "npm run clean && jshint src/*.js && npm run bundle-standalone && npm run uglify && npm run show-gzipped-minjs-size",
-    "test-visual": "beefy test/visual/ttips.js --index=test/visual/beefy.html"
-  },
-  "browserify": {
-    "transform": "cssify"
+    "prelint": "echo \"running eslint...\" && exit 0",
+    "lint": "eslint -c ./.eslintrc.js --ext .js src config",
+    "lintfix": "npm run lint -- --fix",
+    "dev": "NODE_ENV=development webpack-dev-server --config webpack.config.js --env=development --progress --profile --colors --inline",
+    "prebuild": "npm run lint && rm -rf ./dist",
+    "build": "NODE_ENV=production webpack --config webpack.config.js --env=production --progress --profile --colors",
+    "analyze": "npm run build --report",
+    "postbuild": "csso src/ttips.css > dist/ttips.min.css",
+    "pretest": "echo \"running tests...\" && exit 0",
+    "test": "NODE_ENV=testing ava -v",
+    "serve:docs": "docute ./docs",
+    "release": "gf-release"
   },
   "dependencies": {
-    "cssify": "^1.0.2"
+    "ev-pos": "^1.0.1",
+    "http-server": "0.11.1"
   },
   "devDependencies": {
-    "browser-run": "^3.0.8",
-    "browserify": "^13.0.0",
-    "faucet": "0.0.1",
-    "jshint": "^2.9.1",
-    "tape": "^4.5.1",
-    "testling": "^1.7.1",
-    "uglify-js": "latest",
-    "watchify": "^3.7.0"
+    "autoprefixer": "8.2.0",
+    "ava": "0.25.0",
+    "babel-core": "6.26.0",
+    "babel-eslint": "8.2.3",
+    "babel-loader": "7.1.4",
+    "babel-preset-env": "1.6.1",
+    "browser-env": "3.2.5",
+    "css-loader": "0.28.11",
+    "cssnano": "^3.10.0",
+    "eslint": "4.19.1",
+    "eslint-config-standard": "11.0.0",
+    "eslint-friendly-formatter": "4.0.1",
+    "eslint-loader": "2.0.0",
+    "eslint-plugin-import": "2.11.0",
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-promise": "3.7.0",
+    "eslint-plugin-standard": "3.0.1",
+    "file-loader": "1.1.11",
+    "friendly-errors-webpack-plugin": "1.7.0",
+    "gf-release": "1.4.5",
+    "html-webpack-plugin": "3.2.0",
+    "mkdirp": "^0.5.1",
+    "nodes-each": "1.0.3",
+    "pre-commit": "1.2.2",
+    "pre-push": "0.1.1",
+    "progress-bar-webpack-plugin": "1.11.0",
+    "style-loader": "0.20.3",
+    "url-loader": "1.0.1",
+    "webpack": "4.5.0",
+    "webpack-bundle-analyzer": "2.11.1",
+    "webpack-cli": "2.0.14",
+    "webpack-dev-server": "3.1.3",
+    "webpack-merge": "4.1.2"
+  },
+  "ava": {
+    "concurrency": 5,
+    "failFast": false,
+    "require": [
+      "./test/helpers/ava-setup.js",
+      "babel-register"
+    ]
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "pre-push": [
+    "test"
+  ],
+  "releaseConfig": {
+    "buildCommand": "npm run build && git add -A && git commit -am \"updated build (--)\"; ",
+    "versionFiles": [
+      "package.json",
+      "package-lock.json"
+    ],
+    "commitMessagesExclude": [
+      "Merge tag",
+      "Merge branch 'release",
+      "Merge branch 'develop' into",
+      "bumped",
+      "bumbed",
+      "(--)",
+      "Merge branch 'feature/",
+      "updated build",
+      "bumped version"
+    ],
+    "commitBaseUrl": "https://github.com/stbaer/ttips/commits",
+    "historyFile": "History.md"
   }
 }

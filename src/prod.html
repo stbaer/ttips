@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <title>ttips</title>
+  <link rel="stylesheet" type="text/css" href="ttips.min.css">
+</head>
+<body>
+
+<div>
+  <div style="width:100%; text-align: center;">
+    <h2>Tooltip positions</h2>
+    <br>
+    <button style="float:left;">right</button>
+    <div class="ttip" data-ttip-position="right">ttip right</div>
+    <button>top</button>
+    <div class="ttip" data-ttip-position="top">ttip top</div>
+    <button>bottom</button>
+    <div class="ttip">ttip bottom (default)</div>
+    <button style="float:right">left</button>
+    <div class="ttip" data-ttip-position="left">ttip left</div>
+  </div>
+</div>
+
+<script type="text/javascript" src="ttips.min.js"></script>
+<script type="text/javascript">
+  ttips.initialize()
+</script>
+</body>
+</html>

@@ -1,14 +1,16 @@
 # ttips
 
+[![Build Status](https://travis-ci.org/stbaer/ttips.svg?branch=master)](https://travis-ci.org/stbaer/ttips)
+[![Inline docs](http://inch-ci.org/github/stbaer/ttips.svg?branch=master)](http://inch-ci.org/github/stbaer/ttips)
+[![Dependency Status](https://david-dm.org/stbaer/ttips.svg)](https://david-dm.org/stbaer/ttips)
+
 > Simple and lightweight tooltip module. [Examples](http://stbaer.github.io/ttips)
 
-*minified and gzipped about 1.8 kB*
+*minified ~ 3kb, minified and gzipped ~ 1kB*
 
 ## Install
 
 `npm i ttips`
-
-[![NPM](https://nodei.co/npm/ttips.png?downloads=true)](https://nodei.co/npm/ttips/)
 
 ## Usage
 
@@ -26,29 +28,14 @@ Put a containter with a *.ttip* class behind the element that should trigger the
 
 JS:
 
-```js
-var ttips = require('ttips'); // or use the standalone version from the dist folder
-
-// initialize the tooltips
-ttips.initialize();
-
-// update the tooltips, e.g after a dom change
-ttips.update();
-
-// hide tooltip, does nothing if no tooltip is visible
-ttips.hide();
-
-// destroy ...
-ttips.destroy();
 ```
+import ttips from 'ttips'
 
-## Building
-
+ttips.initialize();    // initialize the tooltips
+ttips.update();        // update the tooltips, e.g after a dom change
+ttips.hide();          // hide tooltip, does nothing if no tooltip is visible
+ttips.destroy();       // destroy ...
 ```
-npm i && npm run build
-```
-
-[node]: http://nodejs.org/
 
 
 ## Licence
