@@ -1,5 +1,13 @@
 
 
+###Release 1.0.2
+>*April 26, 2018*
+
+ * removed pre-commit and pre-push hooks, removed unused dev dependency [14d5acf](https://github.com/stbaer/ttips/commits/14d5acf735130fa4edd58e0c3acde43710612a9d)
+ * removed unused dependencies [be710ed](https://github.com/stbaer/ttips/commits/be710ed3bf4722ee24a965a0690191b81c6d46d7)
+
+
+
 ###Release 1.0.1
 >*April 26, 2018*
 
