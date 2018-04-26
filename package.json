@@ -32,9 +32,12 @@
     "cssify": "^1.0.2"
   },
   "devDependencies": {
+    "beefy": "2.1.8",
+    "browser-run": "5.0.0",
     "browserify": "^13.0.0",
     "faucet": "0.0.1",
     "jshint": "^2.9.1",
+    "mkdirp": "0.5.1",
     "tape": "^4.5.1",
     "testling": "^1.7.1",
     "uglify-js": "latest",
