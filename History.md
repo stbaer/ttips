@@ -1,5 +1,12 @@
 
 
+###Release 1.0.1
+>*April 26, 2018*
+
+ * updated readme, added files field to package.json [a12ecdf](https://github.com/stbaer/ttips/commits/a12ecdf04d035486768921dbafc731edd49de7e4)
+
+
+
 ###Release 1.0.0
 >*April 26, 2018*
 
@@ -9,5 +16,3 @@
  * added missing dev deps [5252e4c](https://github.com/stbaer/ttips/commits/5252e4cc3a83ca442199204d7f0380e1fdaad1f6)
  * updated readme [fd886bf](https://github.com/stbaer/ttips/commits/fd886bffaea54556d5cc64c777e906b9a1873509)
  * removed browser-run from dev deps [b314090](https://github.com/stbaer/ttips/commits/b31409012f4bab16ab51612eb690db20aff56c5d)
-
-
