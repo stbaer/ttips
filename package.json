@@ -1,6 +1,6 @@
 {
   "name": "ttips",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./src/index.js",
   "description": "Tooltip module",
   "author": "Steffen Bär <stbaer.pub@gmail.com>",
@@ -28,6 +28,10 @@
     "serve:docs": "docute ./docs",
     "release": "gf-release"
   },
+  "files": [
+    "dist/",
+    "src/"
+  ],
   "dependencies": {
     "ev-pos": "^1.0.1",
     "http-server": "0.11.1"

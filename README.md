@@ -4,7 +4,9 @@
 [![Inline docs](http://inch-ci.org/github/stbaer/ttips.svg?branch=master)](http://inch-ci.org/github/stbaer/ttips)
 [![Dependency Status](https://david-dm.org/stbaer/ttips.svg)](https://david-dm.org/stbaer/ttips)
 
-> Simple and lightweight tooltip module. [Examples](http://stbaer.github.io/ttips)
+> Simple and lightweight tooltip module. 
+
+[Docs and Examples](http://stbaer.github.io/ttips)
 
 *minified ~ 3kb, minified and gzipped ~ 1kB*
 
